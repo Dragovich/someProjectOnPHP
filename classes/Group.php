@@ -3,7 +3,6 @@
 namespace TEST;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/interface/entity.php';
 
 class Group {
 
