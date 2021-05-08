@@ -1,32 +1,41 @@
 <?php
 
 namespace TEST;
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/include.php';
 
 use Exception;
 
 class CSV {
 
+    /**
+     * @var string|null
+     */
     private $_csv_file = null;
 
     /**
-     * @param string $csv_file  - путь до csv-файла
+     * @param string $csv_file - путь до csv-файла
      */
     public function __construct($csv_file) {
         if (file_exists($csv_file)) {
             $this->_csv_file = $csv_file;
-        }
-        else {
+        } else {
             throw new Exception("Файл не найден");
         }
     }
 
-    public function setCSV(Array $csv, $new_csv_file) {
+
+    /**
+     * @param array $csv          - массив данных
+     * @param       $new_csv_file - название файла
+     */
+    public function setCSV(array $csv, $new_csv_file) {
         $handle = fopen($new_csv_file, 'w');
         foreach ($csv as $value) {
-            fputcsv($handle,  $value);
+            fputcsv($handle, $value);
         }
-        echo ('<pre>Новая таблица готова</pre>');
+        echo('<pre>Новая таблица готова</pre>');
+
         fclose($handle);
     }
 
@@ -35,15 +44,15 @@ class CSV {
      * @return array;
      */
     public function getCSV() {
-        $handle = fopen($this->_csv_file, "r"); //Открываем csv для чтения
+        $handle = fopen($this->_csv_file, "r");
 
-        $array_line_full = array(); //Массив будет хранить данные из csv
-        //Проходим весь csv-файл, и читаем построчно. 3-ий параметр разделитель поля
-        while (($line = fgetcsv($handle, 0, "|")) !== FALSE) {
-            $array_line_full[$line[0]] = $line[1]; //Записываем строчки в массив
+        $array_line_full = [];
+        while (($line = fgetcsv($handle, 0, "|")) !== false) {
+            $array_line_full[$line[0]] = $line[1];
         }
-        fclose($handle); //Закрываем файл
-        return $array_line_full; //Возвращаем прочтенные данные
+        fclose($handle);
+
+        return $array_line_full;
     }
 
 }
