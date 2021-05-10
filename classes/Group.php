@@ -20,11 +20,12 @@ class Group {
      * Group constructor.
      */
     function __construct() {
-        $randUsersId = array_rand(NUMBERS_OF_PEOPLE, 10);
-        $lostRandUsersId = array_diff(NUMBERS_OF_PEOPLE, $randUsersId);
+        $massiveOfPeople = NUMBERS_OF_PEOPLE;
+        shuffle($massiveOfPeople);
+        $massiveOfPeople = array_chunk($massiveOfPeople, 10);
 
-        $this->firstPathOfGroup = new UsersId($randUsersId);
-        $this->secondPathOfGroup = new UsersId($lostRandUsersId);
+        $this->firstPathOfGroup = new UsersId($massiveOfPeople[0]);
+        $this->secondPathOfGroup = new UsersId($massiveOfPeople[1]);
     }
 
     function __destruct() {
